@@ -139,6 +139,22 @@ function getPasswordOptions() {
 // Function for getting a random element from an array
 function getRandom(arr) {
 
+  // Select random inner array
+  let randomIndex = Math.floor(Math.random() * arr.length);
+  arr[randomIndex][Math.floor((Math.random() * (arr[randomIndex].length)))];
+
+  // Create array to store the randomly selected array
+  let outerArray = arr[randomIndex]
+
+  // Select random value from chosen array
+  let randomChar = Math.floor(Math.random() * outerArray.length);
+  outerArray[randomChar][Math.floor((Math.random() * (outerArray[randomChar].length)))];
+
+  // Convert value to string and return value
+  let character = String(outerArray[randomChar]);
+
+  return character;
+
 }
 
 // Function to generate password with user input
@@ -154,6 +170,33 @@ function generatePassword() {
       alert("You must confirm at least ONE password option.");
       getPasswordOptions();
     }
+
+  // Based on user input, push selected arrays into one array
+  let passwordOptionsArray = [];
+  if (passwordOptions.lowercaseChar) {
+    passwordOptionsArray.push(lowerCasedCharacters);
+  }
+  if (passwordOptions.uppercaseChar) {
+    passwordOptionsArray.push(upperCasedCharacters);
+  }
+  if (passwordOptions.numericChar) {
+    passwordOptionsArray.push(numericCharacters);
+  }
+  if (passwordOptions.specialChar) {
+    passwordOptionsArray.push(specialCharacters);
+  }
+
+  // Function to get random password for length of array specified by user
+  // Not merged passwordOptionsArray into single array as there is a higher probability that all specified options are selected at random
+  let passwordArray = [];
+
+  function getRandomPassword() {
+    for(let i = 0; i < passwordOptions.passwordLength; i++) {
+      passwordArray[i] = getRandom(passwordOptionsArray);
+    }
+  }
+
+  getRandomPassword();
 
 }
 
