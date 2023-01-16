@@ -90,7 +90,7 @@ var upperCasedCharacters = [
 
 // Object to store user input for password options
 let passwordOptions = {
-  passwordLength: 0,
+  passwordLength: "",
   lowercaseChar:  true,
   uppercaseChar: true,
   numericChar: true,
@@ -100,7 +100,10 @@ let passwordOptions = {
 // Function to prompt user for password options
 function getPasswordOptions() {
   passwordOptions.passwordLength = parseInt(prompt("Please state the character length of your desired password between 10 and 64 characters:"));  
-  
+   
+  // Obtain user selections
+  passwordOptions.passwordLength = passwordOptions.passwordLength;
+
   if(passwordOptions.passwordLength >= 10 && passwordOptions.passwordLength <= 64){
 
     passwordOptions.lowercaseChar = confirm("Please click confirm if you want to include lowercase characters in your passwors, otherwise click cancel.");    
@@ -197,6 +200,65 @@ function generatePassword() {
   }
 
   getRandomPassword();
+
+  // Check if all selected password options are included and re-run the getRandomPassword function if not  
+  if(passwordOptions.lowercaseChar) {
+    let lowercaseIncluded = false;
+
+    for(let i = 0; i < lowerCasedCharacters.length; i++) {
+      if(passwordArray.indexOf(lowerCasedCharacters[i]) > -1) {
+        lowercaseIncluded = true;
+      }
+      else{
+        getRandomPassword();
+      }
+    }
+  }
+
+  if(passwordOptions.uppercaseChar) {
+    let uppercaseIncluded = false;
+
+    for(let i = 0; i < upperCasedCharacters.length; i++) {
+      if(passwordArray.indexOf(upperCasedCharacters[i]) > -1) {
+        uppercaseIncluded = true;
+      }
+      else{
+        getRandomPassword();
+      }
+    }
+  }
+  
+  if(passwordOptions.numericChar) {
+    let numericIncluded = false;
+
+    for(let i = 0; i < numericCharacters.length; i++) {
+      if(passwordArray.indexOf(numericCharacters[i]) > -1) {
+        numericIncluded = true;
+      }
+      else{
+        getRandomPassword();
+      }
+    }
+  }
+
+  if(passwordOptions.specialChar) {
+    let specialIncluded = false;
+
+    for(let i = 0; i < specialCharacters.length; i++) {
+      if(passwordArray.indexOf(specialCharacters[i]) > -1) {
+        specialIncluded = true;
+      }
+      else{
+        getRandomPassword();
+      }
+    }
+  }
+
+  // Combine array into a string of characters and return value
+  let randomPassword = passwordArray.join('');
+
+  return randomPassword;
+
 
 }
 
